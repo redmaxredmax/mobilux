@@ -5,12 +5,19 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 const RegisterPage: NextPage = () => {
   const router = useRouter();
+  const { toast } = useToast();
   const { register, handleSubmit, reset } = useForm();
   const submit = (data: any) => {
     axios.post("http://localhost:8000/register", data).then((res) => {
+      toast({
+        title: "Foydalanuvchi muvaffavqiyatli ro'yxatdan o'tdi!",
+        action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
+      });
       router.push("/login");
     });
   };
